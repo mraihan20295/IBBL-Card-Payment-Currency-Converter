@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cellfin-converter.netlify.app/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /.netlify/
+Disallow: /.vscode/
+
+# Allow important files
+Allow: /style.css
+Allow: /script.js
+Allow: /images/

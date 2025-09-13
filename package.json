@@ -1,0 +1,35 @@
+{
+  "name": "cellfin-currency-converter",
+  "version": "1.0.0",
+  "description": "CellFin Virtual Mastercard Currency Converter for IBBL - Calculate exact BDT requirement for USD loading",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server . -p 3000 -o",
+    "build": "echo 'Static site - no build needed'",
+    "dev": "http-server . -p 3000 -o -c-1",
+    "serve": "http-server . -p 8080"
+  },
+  "keywords": [
+    "currency-converter",
+    "cellfin",
+    "mastercard",
+    "ibbl",
+    "islami-bank",
+    "bangladesh",
+    "usd-bdt",
+    "exchange-rate"
+  ],
+  "author": "Zelics",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/cellfin-currency-converter.git"
+  },
+  "homepage": "https://cellfin-converter.netlify.app"
+}
