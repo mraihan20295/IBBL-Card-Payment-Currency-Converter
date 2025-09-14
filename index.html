@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>CellFin Virtual Mastercard Currency Converter - IBBL</title>
     <meta name="description"
         content="Calculate the total BDT amount needed for CellFin Virtual Mastercard USD loading with fees and VAT - Islami Bank Bangladesh Limited">
@@ -41,8 +44,121 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Load critical CSS immediately -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Load critical CSS immediately with multiple fallbacks -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Critical CSS inline for immediate mobile support -->
+    <style>
+        /* Critical mobile-first styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23006B3C;stop-opacity:1" /><stop offset="25%" style="stop-color:%23008B4A;stop-opacity:1" /><stop offset="50%" style="stop-color:%2300A556;stop-opacity:1" /><stop offset="75%" style="stop-color:%23228B22;stop-opacity:1" /><stop offset="100%" style="stop-color:%23006B3C;stop-opacity:1" /></linearGradient></defs><rect width="100%" height="100%" fill="url(%23grad1)"/></svg>') center/cover;
+            min-height: 100vh;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Prevent scrolling only during loading */
+        body.loading {
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        /* Container with glassmorphism */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .header {
+            padding: 32px 40px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .title-section h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .title-section h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+    
+    <!-- Noscript fallback for basic styling -->
+    <noscript>
+        <style>
+            body { 
+                background: linear-gradient(135deg, #006B3C 0%, #00A556 100%);
+                font-family: Arial, sans-serif;
+                padding: 20px;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                background: rgba(255,255,255,0.95);
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                overflow: hidden;
+            }
+            .header {
+                padding: 30px;
+                background: rgba(255,255,255,0.1);
+                border-bottom: 1px solid #eee;
+            }
+            .main-content {
+                padding: 30px;
+            }
+            .page-loader { display: none !important; }
+            .main-app { opacity: 1 !important; visibility: visible !important; }
+        </style>
+    </noscript>
 
     <!-- Critical CSS inline to prevent FOUC -->
     <style>
@@ -451,6 +567,7 @@
 
             // Wait for critical resources to load
             Promise.all([
+                // Wait for DOM and window load
                 new Promise(resolve => {
                     if (document.readyState === 'complete') {
                         resolve();
@@ -458,39 +575,141 @@
                         window.addEventListener('load', resolve);
                     }
                 }),
+                // Wait for stylesheets with enhanced detection
                 new Promise(resolve => {
-                    // Check if stylesheets are loaded
-                    const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
-                    let loadedCount = 0;
+                    let attempts = 0;
+                    const maxAttempts = 20;
                     
-                    if (stylesheets.length === 0) {
-                        resolve();
-                        return;
+                    function checkCSS() {
+                        attempts++;
+                        
+                        // Check if main container has expected styles
+                        const container = document.querySelector('.container');
+                        const header = document.querySelector('.header');
+                        
+                        if (container && header) {
+                            const containerStyles = getComputedStyle(container);
+                            const headerStyles = getComputedStyle(header);
+                            
+                            // Verify key CSS properties are applied
+                            const cssLoaded = 
+                                containerStyles.borderRadius !== '0px' ||
+                                containerStyles.backdropFilter !== 'none' ||
+                                headerStyles.backgroundColor !== 'rgba(0, 0, 0, 0)' ||
+                                attempts >= maxAttempts;
+                            
+                            if (cssLoaded || attempts >= maxAttempts) {
+                                resolve();
+                                return;
+                            }
+                        }
+                        
+                        // Check stylesheets
+                        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+                        let loadedCount = 0;
+                        
+                        stylesheets.forEach(link => {
+                            try {
+                                if (link.sheet && link.sheet.cssRules) {
+                                    loadedCount++;
+                                } else if (link.sheet) {
+                                    loadedCount++;
+                                }
+                            } catch (e) {
+                                // Cross-origin or loading issues
+                                loadedCount++;
+                            }
+                        });
+                        
+                        if (loadedCount === stylesheets.length || attempts >= maxAttempts) {
+                            resolve();
+                        } else {
+                            setTimeout(checkCSS, 100);
+                        }
                     }
                     
-                    stylesheets.forEach(link => {
-                        if (link.sheet) {
-                            loadedCount++;
-                        } else {
-                            link.addEventListener('load', () => {
-                                loadedCount++;
-                                if (loadedCount === stylesheets.length) {
-                                    resolve();
-                                }
-                            });
-                        }
-                    });
-                    
-                    if (loadedCount === stylesheets.length) {
-                        resolve();
+                    // Start checking after a brief delay
+                    setTimeout(checkCSS, 50);
+                }),
+                // Wait for fonts
+                new Promise(resolve => {
+                    if (document.fonts && document.fonts.ready) {
+                        document.fonts.ready.then(resolve).catch(() => resolve());
+                    } else {
+                        setTimeout(resolve, 200);
                     }
                 })
             ]).then(() => {
                 hideLoader();
+            }).catch(() => {
+                // If promises fail, still hide loader
+                hideLoader();
             });
 
             // Fallback: Hide loader after maximum wait time (prevent infinite loading)
-            setTimeout(hideLoader, 4000); // Increased timeout for mobile
+            setTimeout(hideLoader, 5000); // Increased timeout for mobile
+        })();
+    </script>
+    
+    <!-- CSS Loading Fallback Script -->
+    <script>
+        // CSS loading verification and fallback
+        (function() {
+            let cssCheckInterval;
+            let cssCheckAttempts = 0;
+            const maxCSSAttempts = 30;
+            
+            function verifyCSSLoaded() {
+                cssCheckAttempts++;
+                
+                const container = document.querySelector('.container');
+                if (!container) {
+                    if (cssCheckAttempts < maxCSSAttempts) {
+                        setTimeout(verifyCSSLoaded, 100);
+                    }
+                    return;
+                }
+                
+                const computedStyle = getComputedStyle(container);
+                const hasGlassEffect = 
+                    computedStyle.backdropFilter !== 'none' ||
+                    computedStyle.backgroundColor.includes('rgba') ||
+                    computedStyle.borderRadius !== '0px';
+                
+                if (!hasGlassEffect && cssCheckAttempts < maxCSSAttempts) {
+                    // CSS might not be loaded, retry
+                    setTimeout(verifyCSSLoaded, 100);
+                } else if (!hasGlassEffect) {
+                    // CSS failed to load, add basic mobile-friendly inline styles
+                    const fallbackStyle = document.createElement('style');
+                    fallbackStyle.textContent = `
+                        .container { 
+                            background: rgba(255,255,255,0.95) !important; 
+                            border-radius: 15px !important; 
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important; 
+                        }
+                        .header { 
+                            background: rgba(255,255,255,0.1) !important; 
+                            border-bottom: 1px solid #eee !important; 
+                        }
+                        .main-content { 
+                            padding: 20px !important; 
+                        }
+                        @media (max-width: 768px) {
+                            .container { margin: 10px !important; }
+                            .header { padding: 15px !important; }
+                        }
+                    `;
+                    document.head.appendChild(fallbackStyle);
+                }
+            }
+            
+            // Start verification after DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', verifyCSSLoaded);
+            } else {
+                verifyCSSLoaded();
+            }
         })();
     </script>
 </body>
