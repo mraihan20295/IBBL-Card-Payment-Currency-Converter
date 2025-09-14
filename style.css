@@ -11,29 +11,26 @@ body {
   line-height: 1.6;
   color: #1a1a1a;
   background: linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.3) 0%,
-      rgba(0, 0, 0, 0.5) 100%
-    ),
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23006B3C;stop-opacity:1" /><stop offset="25%" style="stop-color:%23008B4A;stop-opacity:1" /><stop offset="50%" style="stop-color:%2300A556;stop-opacity:1" /><stop offset="75%" style="stop-color:%23228B22;stop-opacity:1" /><stop offset="100%" style="stop-color:%23006B3C;stop-opacity:1" /></linearGradient><pattern id="mosque" patternUnits="userSpaceOnUse" width="200" height="200" patternTransform="rotate(45)"><polygon points="100,20 120,80 80,80" fill="rgba(255,255,255,0.03)"/><circle cx="100" cy="90" r="30" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="2"/><rect x="85" y="120" width="30" height="40" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grad1)"/><rect width="100%" height="100%" fill="url(%23mosque)"/><circle cx="200" cy="150" r="100" fill="rgba(255,255,255,0.01)"/><circle cx="800" cy="400" r="150" fill="rgba(255,255,255,0.01)"/><circle cx="1000" cy="200" r="80" fill="rgba(255,255,255,0.02)"/><polygon points="300,600 350,550 400,600 375,650 325,650" fill="rgba(255,255,255,0.02)"/><polygon points="700,700 750,650 800,700 775,750 725,750" fill="rgba(255,255,255,0.01)"/></svg>')
-      center/cover;
+    135deg,
+    #006b3c 0%,
+    #008b4a 25%,
+    #00a556 50%,
+    #228b22 75%,
+    #006b3c 100%
+  );
   min-height: 100vh;
   padding: 20px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* Remove backdrop-filter from body for better mobile compatibility */
 }
 
 /* Container */
 .container {
   max-width: 900px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   position: relative;
 }
@@ -57,10 +54,8 @@ body {
 /* Header */
 .header {
   padding: 32px 40px 24px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   position: relative;
   z-index: 2;
 }
@@ -82,25 +77,22 @@ body {
 .title-section h1 {
   font-size: 26px;
   font-weight: 700;
-  color: #ffffff;
+  color: #1b5e20;
   margin-bottom: 4px;
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #2e7d32;
   font-weight: 500;
 }
 
 /* Card Showcase Section */
 .card-showcase {
   padding: 28px 40px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   position: relative;
   z-index: 2;
 }
@@ -215,14 +207,13 @@ body {
 .card-info-text h2 {
   font-size: 32px;
   font-weight: 700;
-  color: #ffffff;
+  color: #1b5e20;
   margin-bottom: 8px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .card-info-text p {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #2e7d32;
   line-height: 1.5;
 }
 
@@ -254,14 +245,11 @@ body {
 }
 
 .converter-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   margin-bottom: 28px;
 }
 
@@ -282,12 +270,11 @@ body {
 
 .input-group label {
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
+  color: #1b5e20;
   font-size: 14px;
   line-height: 1.4;
   margin-bottom: 8px;
   display: block;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .input-header {
@@ -370,7 +357,7 @@ body {
 .currency-symbol {
   position: absolute;
   left: 16px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #1b5e20;
   font-weight: 600;
   font-size: 16px;
   z-index: 1;
@@ -383,15 +370,13 @@ body {
   width: 100%;
   height: 48px;
   padding: 0 16px 0 40px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(27, 94, 32, 0.3);
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1b5e20;
   line-height: 1.5;
   display: flex;
   align-items: center;
@@ -399,18 +384,18 @@ body {
 
 .currency-input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  border-color: #1b5e20;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
 }
 
 .currency-input:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(27, 94, 32, 0.5);
+  background: #ffffff;
 }
 
 .currency-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(27, 94, 32, 0.6);
   font-weight: 400;
 }
 
