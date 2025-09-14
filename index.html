@@ -19,7 +19,7 @@
     <meta property="og:title" content="CellFin Virtual Mastercard Currency Converter - IBBL">
     <meta property="og:description"
         content="Calculate the total BDT amount needed for CellFin Virtual Mastercard USD loading with fees and VAT">
-    <meta property="og:image" content="https://cellfin-converter.netlify.app/images/cellfin-card.jpg">
+    <meta property="og:image" content="https://cellfin-converter.netlify.app/images/cellfin-card.webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -27,7 +27,7 @@
     <meta property="twitter:title" content="CellFin Virtual Mastercard Currency Converter - IBBL">
     <meta property="twitter:description"
         content="Calculate the total BDT amount needed for CellFin Virtual Mastercard USD loading with fees and VAT">
-    <meta property="twitter:image" content="https://cellfin-converter.netlify.app/images/cellfin-card.jpg">
+    <meta property="twitter:image" content="https://cellfin-converter.netlify.app/images/cellfin-card.webp">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon"
@@ -42,9 +42,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Load CSS immediately - simple and reliable -->
-    <link rel="stylesheet" href="/style.css" type="text/css">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="stylesheet" href="style.css" type="text/css">
     <noscript>
-        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="style.css">
     </noscript>
 
     <!-- Critical CSS inline for immediate mobile support -->
@@ -66,6 +67,7 @@
             min-height: 100vh;
             padding: 20px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         /* Prevent scrolling only during loading */
@@ -80,6 +82,7 @@
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             box-shadow:
@@ -94,6 +97,7 @@
             padding: 32px 40px 24px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             z-index: 2;
@@ -201,6 +205,7 @@
             z-index: 9999;
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .page-loader.hidden {
@@ -392,7 +397,7 @@
                     <picture class="card-picture">
                         <source srcset="images/cellfin-card.webp" type="image/webp">
                         <source srcset="images/cellfin-card.png" type="image/png">
-                        <img src="images/cellfin-card.jpg" alt="CellFin Virtual Mastercard" class="cellfin-card-image"
+                        <img src="images/cellfin-card.webp" alt="CellFin Virtual Mastercard" class="cellfin-card-image"
                             onerror="this.style.display='none'; document.querySelector('.card-fallback').style.display='block';">
                     </picture>
                     <div class="card-fallback" style="display: none;">
@@ -438,7 +443,7 @@
                                 <label for="exchangeRate">Exchange Rate (BDT per USD)</label>
                                 <button type="button" class="exchange-rate-btn"
                                     onclick="window.open('https://www.islamibankbd.com/exchange-rate', '_blank')">
-                                    <span class="btn-icon">�</span>
+                                    <span class="btn-icon">↗</span>
                                     <span class="btn-text">Today's Rates</span>
                                 </button>
                             </div>

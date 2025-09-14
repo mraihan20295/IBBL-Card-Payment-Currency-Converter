@@ -9,7 +9,11 @@
   # Node.js version (if needed for build tools)
   NODE_VERSION = "18"
 
-# No redirects needed for static site
+# SPA fallback for unmatched routes (existing files are served normally)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
 # Security headers
 [[headers]]
