@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>CellFin Virtual Mastercard Currency Converter - IBBL</title>
     <meta name="description"
         content="Calculate the total BDT amount needed for CellFin Virtual Mastercard USD loading with fees and VAT - Islami Bank Bangladesh Limited">
@@ -44,9 +41,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Load critical CSS immediately with multiple fallbacks -->
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Load CSS immediately - simple and reliable -->
+    <link rel="stylesheet" href="./style.css">
+    <noscript><link rel="stylesheet" href="./style.css"></noscript>
 
     <!-- Critical CSS inline for immediate mobile support -->
     <style>
@@ -575,151 +572,10 @@
                 }, remainingTime);
             }
 
-            // Wait for critical resources to load
-            Promise.all([
-                // Wait for DOM and window load
-                new Promise(resolve => {
-                    if (document.readyState === 'complete') {
-                        resolve();
-                    } else {
-                        window.addEventListener('load', resolve);
-                    }
-                }),
-                // Wait for stylesheets with enhanced detection
-                new Promise(resolve => {
-                    let attempts = 0;
-                    const maxAttempts = 20;
-
-                    function checkCSS() {
-                        attempts++;
-
-                        // Check if main container has expected styles
-                        const container = document.querySelector('.container');
-                        const header = document.querySelector('.header');
-
-                        if (container && header) {
-                            const containerStyles = getComputedStyle(container);
-                            const headerStyles = getComputedStyle(header);
-
-                            // Verify key CSS properties are applied
-                            const cssLoaded =
-                                containerStyles.borderRadius !== '0px' ||
-                                containerStyles.backdropFilter !== 'none' ||
-                                headerStyles.backgroundColor !== 'rgba(0, 0, 0, 0)' ||
-                                attempts >= maxAttempts;
-
-                            if (cssLoaded || attempts >= maxAttempts) {
-                                resolve();
-                                return;
-                            }
-                        }
-
-                        // Check stylesheets
-                        const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
-                        let loadedCount = 0;
-
-                        stylesheets.forEach(link => {
-                            try {
-                                if (link.sheet && link.sheet.cssRules) {
-                                    loadedCount++;
-                                } else if (link.sheet) {
-                                    loadedCount++;
-                                }
-                            } catch (e) {
-                                // Cross-origin or loading issues
-                                loadedCount++;
-                            }
-                        });
-
-                        if (loadedCount === stylesheets.length || attempts >= maxAttempts) {
-                            resolve();
-                        } else {
-                            setTimeout(checkCSS, 100);
-                        }
-                    }
-
-                    // Start checking after a brief delay
-                    setTimeout(checkCSS, 50);
-                }),
-                // Wait for fonts
-                new Promise(resolve => {
-                    if (document.fonts && document.fonts.ready) {
-                        document.fonts.ready.then(resolve).catch(() => resolve());
-                    } else {
-                        setTimeout(resolve, 200);
-                    }
-                })
-            ]).then(() => {
+            // Simple reliable loading
+            setTimeout(() => {
                 hideLoader();
-            }).catch(() => {
-                // If promises fail, still hide loader
-                hideLoader();
-            });
-
-            // Fallback: Hide loader after maximum wait time (prevent infinite loading)
-            setTimeout(hideLoader, 5000); // Increased timeout for mobile
-        })();
-    </script>
-
-    <!-- CSS Loading Fallback Script -->
-    <script>
-        // CSS loading verification and fallback
-        (function () {
-            let cssCheckInterval;
-            let cssCheckAttempts = 0;
-            const maxCSSAttempts = 30;
-
-            function verifyCSSLoaded() {
-                cssCheckAttempts++;
-
-                const container = document.querySelector('.container');
-                if (!container) {
-                    if (cssCheckAttempts < maxCSSAttempts) {
-                        setTimeout(verifyCSSLoaded, 100);
-                    }
-                    return;
-                }
-
-                const computedStyle = getComputedStyle(container);
-                const hasGlassEffect =
-                    computedStyle.backdropFilter !== 'none' ||
-                    computedStyle.backgroundColor.includes('rgba') ||
-                    computedStyle.borderRadius !== '0px';
-
-                if (!hasGlassEffect && cssCheckAttempts < maxCSSAttempts) {
-                    // CSS might not be loaded, retry
-                    setTimeout(verifyCSSLoaded, 100);
-                } else if (!hasGlassEffect) {
-                    // CSS failed to load, add basic mobile-friendly inline styles
-                    const fallbackStyle = document.createElement('style');
-                    fallbackStyle.textContent = `
-                        .container { 
-                            background: rgba(255,255,255,0.95) !important; 
-                            border-radius: 15px !important; 
-                            box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important; 
-                        }
-                        .header { 
-                            background: rgba(255,255,255,0.1) !important; 
-                            border-bottom: 1px solid #eee !important; 
-                        }
-                        .main-content { 
-                            padding: 20px !important; 
-                        }
-                        @media (max-width: 768px) {
-                            .container { margin: 10px !important; }
-                            .header { padding: 15px !important; }
-                        }
-                    `;
-                    document.head.appendChild(fallbackStyle);
-                }
-            }
-
-            // Start verification after DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', verifyCSSLoaded);
-            } else {
-                verifyCSSLoaded();
-            }
+            }, 1500);
         })();
     </script>
 </body>
