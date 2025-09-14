@@ -9,12 +9,7 @@
   # Node.js version (if needed for build tools)
   NODE_VERSION = "18"
 
-# Redirect rules for single page application
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
+# No redirects needed for static site
 
 # Security headers
 [[headers]]
@@ -26,21 +21,22 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline'; connect-src 'self' https://www.islamibankbd.com;"
 
-# Cache static assets
+# Cache static assets - but allow cache busting
 [[headers]]
   for = "/style.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=300"
+    Content-Type = "text/css"
 
 [[headers]]
   for = "/script.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=300"
 
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=31536000"
 
 # Font optimization
 [[headers]]
@@ -48,20 +44,6 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Performance optimization
+# Performance optimization - disable processing that might break CSS
 [build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-
-[build.processing.html]
-  pretty_urls = true
-
-[build.processing.images]
-  compress = true
+  skip_processing = true
