@@ -41,11 +41,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="style.css">
-    </noscript>
+    <!-- Load critical CSS immediately -->
+    <link rel="stylesheet" href="style.css">
 
     <!-- Critical CSS inline to prevent FOUC -->
     <style>
@@ -424,7 +421,7 @@
             const mainApp = document.getElementById('mainApp');
 
             // Minimum loading time to prevent flash (UX improvement)
-            const minLoadTime = 500;
+            const minLoadTime = 800; // Increased for mobile
             const startTime = performance.now();
 
             function hideLoader() {
@@ -453,14 +450,47 @@
             }
 
             // Wait for critical resources to load
-            if (document.readyState === 'complete') {
+            Promise.all([
+                new Promise(resolve => {
+                    if (document.readyState === 'complete') {
+                        resolve();
+                    } else {
+                        window.addEventListener('load', resolve);
+                    }
+                }),
+                new Promise(resolve => {
+                    // Check if stylesheets are loaded
+                    const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+                    let loadedCount = 0;
+                    
+                    if (stylesheets.length === 0) {
+                        resolve();
+                        return;
+                    }
+                    
+                    stylesheets.forEach(link => {
+                        if (link.sheet) {
+                            loadedCount++;
+                        } else {
+                            link.addEventListener('load', () => {
+                                loadedCount++;
+                                if (loadedCount === stylesheets.length) {
+                                    resolve();
+                                }
+                            });
+                        }
+                    });
+                    
+                    if (loadedCount === stylesheets.length) {
+                        resolve();
+                    }
+                })
+            ]).then(() => {
                 hideLoader();
-            } else {
-                window.addEventListener('load', hideLoader);
-            }
+            });
 
             // Fallback: Hide loader after maximum wait time (prevent infinite loading)
-            setTimeout(hideLoader, 3000);
+            setTimeout(hideLoader, 4000); // Increased timeout for mobile
         })();
     </script>
 </body>
